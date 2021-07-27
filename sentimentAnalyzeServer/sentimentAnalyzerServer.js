@@ -37,9 +37,10 @@ app.get("/", (req, res) => {
 // @GET /url/emotions
 app.get("/url/emotion", (req, res) => {
     const url = req.query.url;
-    console.log("RESPONSE =====> ",url);
 
-    const params = {
+    console.log("response: ", url);
+
+    const opmt = {
         'url': url,
         'features': {
             "emotion": {
@@ -48,41 +49,41 @@ app.get("/url/emotion", (req, res) => {
         }
     }
 
-    NLU.analyze(params)
+    NLU.analyze(opmt)
         .then(response => res.send(response.result))
         .catch(error => {
-            console.log("error in respones", error)
-            return res.status(500).send({ success: false, message: "something went wrong" })
+            console.log("error in server", error)
+            return res.status(500).send({ success: false, message: "error in server" })
         });
 });
 
 // @GET /url/sentiments
 app.get("/url/sentiment", (req, res) => {
-     const url = req.query.url;
-     console.log("RESPONSE =====> ", url);
-     
-     const params = {
-         'url': url,
-         'features': {
-             "sentiment": {
+    const url = req.query.url;
+    console.log("response: ", url);
+
+    const opmt = {
+        'url': url,
+        'features': {
+            "sentiment": {
                 'document': true
             }
         }
     }
-    
-    NLU.analyze(params)
-    .then(response => res.send(response.result))
+
+    NLU.analyze(opmt)
+        .then(response => res.send(response.result))
         .catch(error => {
-            console.log("error in respones", error)
-            return res.status(500).send({ success: false, message: "something went wrong" })
+            console.log("error in server", error)
+            return res.status(500).send({ success: false, message: "error in server" })
         });
-    });
-    
-    // @GET /text/emotion
-    app.get("/text/emotion", (req, res) => {
-        const text = req.query.text;
-        
-    const params = {
+});
+
+// @GET /text/emotion
+app.get("/text/emotion", (req, res) => {
+    const text = req.query.text;
+
+    const opmt = {
         'text': text,
         'features': {
             "emotion": {
@@ -91,19 +92,19 @@ app.get("/url/sentiment", (req, res) => {
         }
     }
 
-    NLU.analyze(params)
+    NLU.analyze(opmt)
         .then(response => res.send(response.result))
         .catch(error => {
-            console.log("error in respones", error)
-            return res.status(500).send({ success: false, message: "something went wrong" })
+            console.log("error in server", error)
+            return res.status(500).send({ success: false, message: "error in server" })
         });
 });
 
 // @GET text/sentiment
 app.get("/text/sentiment", (req, res) => {
     const text = req.query.text;
-    
-    const params = {
+
+    const opmt = {
         'text': text,
         'features': {
             "sentiment": {
@@ -112,145 +113,14 @@ app.get("/text/sentiment", (req, res) => {
         }
     }
 
-    NLU.analyze(params)
+    NLU.analyze(opmt)
         .then(response => res.send(response.result))
         .catch(error => {
-            console.log("error in respones", error)
-            return res.status(500).send({ success: false, message: "something went wrong" })
+            console.log("error in server", error)
+            return res.status(500).send({ success: false, message: "error in server" })
         });
 });
 
 let server = app.listen(8080, () => {
     console.log('Listening', server.address().port)
 })
-
-// const express = require('express');
-// const dotenv = require('dotenv')
-// const nluInstance = require('./Middleware/IBMNewInstanceCreator')
-// dotenv.config()
-
-// const app = new express();
-
-// app.use(express.static('client'))
-
-// const cors_app = require('cors');
-// app.use(cors_app());
-
-// app.get("/",(req,res)=>{
-//     res.render('index.html');
-//   });
-
-// app.get("/url/emotion", (req,res) => {
-//     const querytext = req.query.url
-//     const newinstance = nluInstance
-//     const analyzeparams = {
-//         'url': querytext,
-//         'features': {
-//             'entities' : {
-//                 'emotion' : true,
-//                 'sentiment': false
-//             }, 'keywords': {
-//                 'emotion': true,
-//                 'sentiment': false
-
-//             }
-//         } 
-//     }
-
-//     newinstance.analyze(analyzeparams).then(analysisresults =>
-//         {
-//            const emotionalanalysis = analysisresults.result.entities[0].emotion
-//             return res.send({emotions: emotionalanalysis});
-//         }).catch( err =>
-//             {
-//                 console.log(err)
-//             })
-// });
-
-// app.get("/url/sentiment", (req,res) => {
-//     const querytext = req.query.url
-//     const newinstance = nluInstance
-//     let sentimentresponse
-//     const analyzeparams = {
-//         'url': querytext,
-//         'features': {
-//             'entities' : {
-//                 'sentiment' : true,
-//                 'emotion'  : false
-//             }, 'keywords': {
-//                 'sentiment': true,
-//                 'emotion': false
-
-//             }
-//         } 
-//     }
-
-//     newinstance.analyze(analyzeparams).then(analysisresults =>
-//         {
-//             console.log(JSON.stringify(analysisresults, null, 2))
-//             sentimentresponse = analysisresults.result.entities[0].sentiment.label
-//             return res.send({senti: sentimentresponse});
-//         }).catch( err =>
-//             {
-//                 console.log(err)
-//             })
-// });
-
-// app.get("/text/emotion", (req,res) => {
-//     const querytext = req.query.text
-//     const newinstance = nluInstance
-//     const analyzeparams = {
-//         'text': querytext,
-//         'features': {
-//             'entities' : {
-//                 'emotion' : true,
-//                 'sentiment': false
-//             }, 'keywords': {
-//                 'emotion': true,
-//                 'sentiment': false
-
-//             }
-//         } 
-//     }
-
-//     newinstance.analyze(analyzeparams).then(analysisresults =>
-//         {
-//             const emotionalanalysis = analysisresults.result.entities[0].emotion
-//             return res.send({emotions: emotionalanalysis});
-//         }).catch( err =>
-//             {
-//                 console.log(err)
-//             })
-// });
-
-// app.get("/text/sentiment", (req,res) => {
-//     const querytext = req.query.text
-//     const newinstance = nluInstance
-//     const analyzeparams = {
-//         'text': querytext,
-//         'features': {
-//             'entities' : {
-//                 'sentiment' : true,
-//                 'emotion'  : false
-//             }, 'keywords': {
-//                 'sentiment': true,
-//                 'emotion': false
-
-//             }
-//         } 
-//     }
-
-//     newinstance.analyze(analyzeparams).then(analysisresults =>
-//         {
-//             console.log(JSON.stringify(analysisresults, null, 2))
-//             const sentimentresponse = analysisresults.result.entities[0].sentiment.label
-//             return res.send({senti: sentimentresponse});
-//         }).catch( err =>
-//             {
-//                 console.log(err)
-//             })
-// });
-
-// let server = app.listen(8080, () => {
-//     console.log('Listening', server.address().port)
-// })
