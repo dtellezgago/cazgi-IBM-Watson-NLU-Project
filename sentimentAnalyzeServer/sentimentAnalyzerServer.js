@@ -36,90 +36,153 @@ app.get("/", (req, res) => {
 
 // @GET /url/emotions
 app.get("/url/emotion", (req, res) => {
-    const url = req.query.url;
 
-    console.log("response: ", url);
+    const analyzeParams = { 'url': req.query.url, 'features': { 'entities': { 'emotion': true, 'limit': 1 } } }
 
-    const opmt = {
-        'url': url,
-        'features': {
-            "emotion": {
-                'document': true
-            }
-        }
-    }
+    const naturalLanguageUnderstanding = getNLUInstance();
 
-    NLU.analyze(opmt)
-        .then(response => res.send(response.result))
-        .catch(error => {
-            console.log("error in server", error)
-            return res.status(500).send({ success: false, message: "error in server" })
-        });
+    naturalLanguageUnderstanding.analyze(analyzeParams).then(analysisResults => {
+        console.log(analysisResults); 
+        console.log(JSON.stringify(analysisResults.result.entities[0].emotion, null, 2)); 
+        return res.send(analysisResults.result.entities[0].emotion, null, 2); 
+        //return res.send(analysisResults); }) .catch(err => { return res.send("Could not do desired operation "+err); });
+
+    });
 });
+
+// app.get("/url/emotion", (req, res) => {
+//     const url = req.query.url;
+
+//     console.log("response: ", url);
+
+//     const opmt = {
+//         'url': url,
+//         'features': {
+//             "emotion": {
+//                 'document': true
+//             }
+//         }
+//     }
+
+//     NLU.analyze(opmt)
+//         .then(response => res.send(response.result))
+//         .catch(error => {
+//             console.log("error in server", error)
+//             return res.status(500).send({ success: false, message: "error in server" })
+//         });
+// });
+
+
+
+
+
+
+
+
 
 // @GET /url/sentiments
 app.get("/url/sentiment", (req, res) => {
-    const url = req.query.url;
-    console.log("response: ", url);
+    const analyzeParams = { 'url': req.query.url, 'features': { 'entities': { 'sentiment': true, 'limit': 1 } } }
 
-    const opmt = {
-        'url': url,
-        'features': {
-            "sentiment": {
-                'document': true
-            }
-        }
-    }
+    const naturalLanguageUnderstanding = getNLUInstance();
 
-    NLU.analyze(opmt)
-        .then(response => res.send(response.result))
-        .catch(error => {
-            console.log("error in server", error)
-            return res.status(500).send({ success: false, message: "error in server" })
-        });
+    naturalLanguageUnderstanding.analyze(analyzeParams).then(analysisResults => {
+        console.log(analysisResults); 
+        console.log(JSON.stringify(analysisResults.result.entities[0].sentiment, null, 2)); 
+        return res.send(analysisResults.result.entities[0].sentiment, null, 2); 
+        //return res.send(analysisResults); }) .catch(err => { return res.send("Could not do desired operation "+err); });
+
+    });
 });
+//     const url = req.query.url;
+//     console.log("response: ", url);
+
+//     const opmt = {
+//         'url': url,
+//         'features': {
+//             "sentiment": {
+//                 'document': true
+//             }
+//         }
+//     }
+
+//     NLU.analyze(opmt)
+//         .then(response => res.send(response.result))
+//         .catch(error => {
+//             console.log("error in server", error)
+//             return res.status(500).send({ success: false, message: "error in server" })
+//         });
+// });
 
 // @GET /text/emotion
 app.get("/text/emotion", (req, res) => {
-    const text = req.query.text;
+    const analyzeParams = { 'text': req.query.text, 'features': { 'entities': { 'emotion': true, 'limit': 1 } } }
 
-    const opmt = {
-        'text': text,
-        'features': {
-            "emotion": {
-                'document': true
-            }
-        }
-    }
+    const naturalLanguageUnderstanding = getNLUInstance();
 
-    NLU.analyze(opmt)
-        .then(response => res.send(response.result))
-        .catch(error => {
-            console.log("error in server", error)
-            return res.status(500).send({ success: false, message: "error in server" })
-        });
+    naturalLanguageUnderstanding.analyze(analyzeParams).then(analysisResults => {
+        console.log(analysisResults); 
+        console.log(JSON.stringify(analysisResults.result.entities[0].emotion, null, 2)); 
+        return res.send(analysisResults.result.entities[0].emotion, null, 2); 
+        //return res.send(analysisResults); }) .catch(err => { return res.send("Could not do desired operation "+err); });
+
+    });
 });
+
+
+
+    //     const text = req.query.text;
+
+//     const opmt = {
+//         'text': text,
+//         'features': {
+//             "emotion": {
+//                 'document': true
+//             }
+//         }
+//     }
+
+//     NLU.analyze(opmt)
+//         .then(response => res.send(response.result))
+//         .catch(error => {
+//             console.log("error in server", error)
+//             return res.status(500).send({ success: false, message: "error in server" })
+//         });
+// });
 
 // @GET text/sentiment
 app.get("/text/sentiment", (req, res) => {
-    const text = req.query.text;
+    const analyzeParams = { 'text': req.query.text, 'features': { 'entities': { 'sentiment': true, 'limit': 1 } } }
 
-    const opmt = {
-        'text': text,
-        'features': {
-            "sentiment": {
-                'document': true
-            }
-        }
-    }
+    const naturalLanguageUnderstanding = getNLUInstance();
 
-    NLU.analyze(opmt)
-        .then(response => res.send(response.result))
-        .catch(error => {
-            console.log("error in server", error)
-            return res.status(500).send({ success: false, message: "error in server" })
-        });
+    naturalLanguageUnderstanding.analyze(analyzeParams).then(analysisResults => {
+        console.log(analysisResults); 
+        console.log(JSON.stringify(analysisResults.result.entities[0].sentiment, null, 2)); 
+        return res.send(analysisResults.result.entities[0].sentiment, null, 2); 
+        //return res.send(analysisResults); }) .catch(err => { return res.send("Could not do desired operation "+err); });
+
+    });
 });
+
+    //     const text = req.query.text;
+
+//     const opmt = {
+//         'text': text,
+//         'features': {
+//             "sentiment": {
+//                 'document': true
+//             }
+//         }
+//     }
+
+//     NLU.analyze(opmt)
+//         .then(response => res.send(response.result))
+//         .catch(error => {
+//             console.log("error in server", error)
+//             return res.status(500).send({ success: false, message: "error in server" })
+//         });
+// });
 
 let server = app.listen(8080, () => {
     console.log('Listening', server.address().port)
