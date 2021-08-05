@@ -19,9 +19,6 @@ const getNLUInstance = () => {
 }
 
 
-// initializing NLU instance
-const NLU = getNLUInstance();
-
 const app = new express();
 
 app.use(express.static('client'))
@@ -50,36 +47,6 @@ app.get("/url/emotion", (req, res) => {
     });
 });
 
-// app.get("/url/emotion", (req, res) => {
-//     const url = req.query.url;
-
-//     console.log("response: ", url);
-
-//     const opmt = {
-//         'url': url,
-//         'features': {
-//             "emotion": {
-//                 'document': true
-//             }
-//         }
-//     }
-
-//     NLU.analyze(opmt)
-//         .then(response => res.send(response.result))
-//         .catch(error => {
-//             console.log("error in server", error)
-//             return res.status(500).send({ success: false, message: "error in server" })
-//         });
-// });
-
-
-
-
-
-
-
-
-
 // @GET /url/sentiments
 app.get("/url/sentiment", (req, res) => {
     const analyzeParams = { 'url': req.query.url, 'features': { 'entities': { 'sentiment': true, 'limit': 1 } } }
@@ -94,25 +61,6 @@ app.get("/url/sentiment", (req, res) => {
 
     });
 });
-//     const url = req.query.url;
-//     console.log("response: ", url);
-
-//     const opmt = {
-//         'url': url,
-//         'features': {
-//             "sentiment": {
-//                 'document': true
-//             }
-//         }
-//     }
-
-//     NLU.analyze(opmt)
-//         .then(response => res.send(response.result))
-//         .catch(error => {
-//             console.log("error in server", error)
-//             return res.status(500).send({ success: false, message: "error in server" })
-//         });
-// });
 
 // @GET /text/emotion
 app.get("/text/emotion", (req, res) => {
@@ -129,27 +77,6 @@ app.get("/text/emotion", (req, res) => {
     });
 });
 
-
-
-    //     const text = req.query.text;
-
-//     const opmt = {
-//         'text': text,
-//         'features': {
-//             "emotion": {
-//                 'document': true
-//             }
-//         }
-//     }
-
-//     NLU.analyze(opmt)
-//         .then(response => res.send(response.result))
-//         .catch(error => {
-//             console.log("error in server", error)
-//             return res.status(500).send({ success: false, message: "error in server" })
-//         });
-// });
-
 // @GET text/sentiment
 app.get("/text/sentiment", (req, res) => {
     const analyzeParams = { 'text': req.query.text, 'features': { 'entities': { 'sentiment': true, 'limit': 1 } } }
@@ -165,24 +92,6 @@ app.get("/text/sentiment", (req, res) => {
     });
 });
 
-    //     const text = req.query.text;
-
-//     const opmt = {
-//         'text': text,
-//         'features': {
-//             "sentiment": {
-//                 'document': true
-//             }
-//         }
-//     }
-
-//     NLU.analyze(opmt)
-//         .then(response => res.send(response.result))
-//         .catch(error => {
-//             console.log("error in server", error)
-//             return res.status(500).send({ success: false, message: "error in server" })
-//         });
-// });
 
 let server = app.listen(8080, () => {
     console.log('Listening', server.address().port)
